@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -47,41 +48,158 @@ namespace Medicontrol.Facturacion
         protected void btn_cargar_Click(object sender, EventArgs e)
         {
             string consulta = string.Empty;
-            if(ddl_contrato.SelectedValue.ToString() != "0")
+            if (ddl_contrato.SelectedValue.ToString() != "0")
             {
-                consulta = "SELECT DISTINCT  FacturaCab.NumFac AS NumFactura FROM FacturaCab INNER JOIN FacturaDet ON FacturaCab.NumFac = FacturaDet.numfac WHERE FacturaCab.CodEntidad = '" +this.ddl_entidad.SelectedValue+ "'"+
-                           " AND FacturaDet.codcontrato= '"+this.ddl_contrato.SelectedValue+"' AND FacturaCab.Estado = '0' AND FacturaCab.FechaFactura Between '"+ Convert.ToDateTime(ViewHelper.ConvertToDate(txt_fechaini.Text)) +"' AND '"+ Convert.ToDateTime(ViewHelper.ConvertToDate(txt_fechafin.Text)) + "' AND facturacab.TipoDoc = 1";
+                consulta = "SELECT DISTINCT FacturaCab.NumFac AS NumFactura, FacturaCab.PDocumento AS FacturaDoc FROM FacturaCab INNER JOIN FacturaDet ON FacturaCab.NumFac = FacturaDet.numfac WHERE FacturaCab.CodEntidad = '" + this.ddl_entidad.SelectedValue + "'" +
+                           " AND FacturaDet.codcontrato= '" + this.ddl_contrato.SelectedValue + "' AND FacturaCab.Estado = '0' AND FacturaCab.FechaFactura Between '" + Convert.ToDateTime(ViewHelper.ConvertToDate(txt_fechaini.Text)) + "' AND '" + Convert.ToDateTime(ViewHelper.ConvertToDate(txt_fechafin.Text)) + "' AND facturacab.TipoDoc = 1";
             }
             else
             {
-                consulta = "SELECT DISTINCT  FacturaCab.NumFac AS NumFactura FROM FacturaCab INNER JOIN FacturaDet ON FacturaCab.NumFac = FacturaDet.numfac WHERE FacturaCab.CodEntidad = '" + this.ddl_entidad.SelectedValue + "'"+
+                consulta = "SELECT DISTINCT FacturaCab.NumFac AS NumFactura, FacturaCab.PDocumento AS FacturaDoc FROM FacturaCab INNER JOIN FacturaDet ON FacturaCab.NumFac = FacturaDet.numfac WHERE FacturaCab.CodEntidad = '" + this.ddl_entidad.SelectedValue + "'" +
                            " AND FacturaCab.Estado=0 AND FacturaCab.FechaFactura Between '" + Convert.ToDateTime(ViewHelper.ConvertToDate(txt_fechaini.Text)) + "' AND '" + Convert.ToDateTime(ViewHelper.ConvertToDate(txt_fechafin.Text)) + "' AND facturacab.TipoDoc = 1";
             }
 
-            SqlConnection conexion = new SqlConnection(ruta);
-            SqlCommand comando = new SqlCommand(consulta, conexion);
-            conexion.Open();
+            fillgrilla(consulta);
 
-            SqlDataReader leer = comando.ExecuteReader();
+        }
 
-            while (leer.Read())
+        private void fillgrilla(string sql)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection cn = new SqlConnection(ruta))
             {
-                string facturaNum = leer[0].ToString();
-                DataTable dt = new DataTable();
-                
-                dt.Columns.Add("1");
-                dt.Columns.Add("2");
-                dt.Columns.Add("3");
-                dt.Columns.Add("4");
-                dt.Columns.Add("5");
-                foreach (DataRow row in dt.Rows)
-                {
-                    row["1"] = facturaNum;
-                }
-
-                var arreglo = dt;
+                SqlDataAdapter da = new SqlDataAdapter(sql, cn);
+                da.Fill(dt);
             }
+            gridPacienteFactura.DataSource = dt;
+
+            gridPacienteFactura.DataBind();
+
+        }
+
+        protected void gridPacienteFactura_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(gridPacienteFactura, "Select$" + e.Row.RowIndex);
+                e.Row.ToolTip = "Click para seleccionar";
+            }
+        }
+
+        protected void gridPacienteFactura_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (GridViewRow row in gridPacienteFactura.Rows)
+            {
+                if (row.RowIndex == gridPacienteFactura.SelectedIndex)
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#A1DCF2");
+                    row.ToolTip = string.Empty;
+                }
+                else
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+                    row.ToolTip = "Click to select this row.";
+                }
+            }
+
+        }
+
+        protected void btn_generarSi_Click(object sender, EventArgs e)
+        {
             
+
+           
+            try
+            {
+                string query = "SELECT FacturaCab.NumFac, FacturaCab.FechaFactura, FacturaCab.CodEntidad, Entidad.NombreEntidad, FacturaCab.CodContrato, Contratos.Descripcion, FacturaCab.VrTotalCopago, FacturaCab.VrTotalEntidad, FacturaCab.CtaCobro " +
+                         "FROM Entidad INNER JOIN (Contratos INNER JOIN FacturaCab ON (Contratos.Codigo = FacturaCab.CodContrato) AND (Contratos.Entidad = FacturaCab.CodEntidad)) ON Entidad.Codigo = Contratos.Entidad " +
+                         "WHERE FacturaCab.NumFac = '" + this.gridPacienteFactura.SelectedRow.Cells[0].Text + "'";
+
+                SqlConnection ConexionVerificar = new SqlConnection(ruta);
+                SqlCommand comando = new SqlCommand(query, ConexionVerificar);
+                ConexionVerificar.Open();
+                SqlDataReader leer = comando.ExecuteReader();
+                if (leer.Read() == true)
+                {
+                    string update = "UPDATE FacturaCab SET CtaCobro='" + this.NumCuentaCobro.Text + "' WHERE NumFac='" + this.gridPacienteFactura.SelectedRow.Cells[0].Text + "' AND TipoDoc='1'";
+                    if (Datos.insertar(update))
+                    {
+                        lbl_resultado.Text = "Error al generar la cuenta de cobro";
+                        return;
+                    }
+                    else
+                    {
+                        lbl_resultado.Text = "Cuenta de cobro generada correctamente";
+                    }
+                }
+                ConexionVerificar.Close();
+                
+            }
+            catch(Exception ex)
+            {
+                lbl_resultado.Text = "Se ha presentado un error al generar cuenta de cobro. El error es el siguiente: " + ex.ToString();
+                return;
+            }
+        }
+
+        protected void btn_guardar_Click(object sender, EventArgs e)
+        {
+            string consecutivo = "SELECT * FROM Consecutivos WHERE TipoCont='6'";
+            SqlConnection ConexionConsec = new SqlConnection(ruta);
+            SqlCommand comando6 = new SqlCommand(consecutivo, ConexionConsec);
+            ConexionConsec.Open();
+            SqlDataReader leer6 = comando6.ExecuteReader();
+            if (leer6.Read() == true)
+            {
+                int numfac = Convert.ToInt32(leer6["NumActual"].ToString());
+                numfac = numfac + 1;
+                NumCuentaCobro.Text = numfac.ToString();
+            }
+            ConexionConsec.Close();
+            try
+            {
+                foreach (GridViewRow Rips in gridPacienteFactura.Rows)
+                {
+                    string NumFactura = HttpUtility.HtmlDecode(Rips.Cells[0].Text);
+                    string query = "SELECT FacturaCab.NumFac, FacturaCab.FechaFactura, FacturaCab.CodEntidad, Entidad.NombreEntidad, FacturaCab.CodContrato, Contratos.Descripcion, FacturaCab.VrTotalCopago, FacturaCab.VrTotalEntidad, FacturaCab.CtaCobro " +
+                        "FROM Entidad INNER JOIN (Contratos INNER JOIN FacturaCab ON (Contratos.Codigo = FacturaCab.CodContrato) AND (Contratos.Entidad = FacturaCab.CodEntidad)) ON Entidad.Codigo = Contratos.Entidad " +
+                        "WHERE FacturaCab.NumFac = '" + NumFactura + "'";
+
+                    SqlConnection ConexionVerificar = new SqlConnection(ruta);
+                    SqlCommand comando = new SqlCommand(query, ConexionVerificar);
+                    ConexionVerificar.Open();
+                    SqlDataReader leer = comando.ExecuteReader();
+                    if (leer.Read() == true)
+                    {
+                        string update = "UPDATE FacturaCab SET CtaCobro='" + this.NumCuentaCobro.Text + "' WHERE NumFac='" + NumFactura + "' AND TipoDoc='1'";
+                        if (Datos.insertar(update))
+                        {
+                            lbl_resultado.Text = "Error al generar la cuenta de cobro";
+                            return;
+                        }
+                        else
+                        {
+                            string updateC = "UPDATE Consecutivos SET NumActual='" + this.NumCuentaCobro.Text + "' WHERE TipoCont='6'";
+                            if (Datos.insertar(updateC))
+                            {
+                                lbl_resultado.Text = "Error al generar la cuenta de cobro";
+                                return;
+                            }
+                            else
+                            {
+                                lbl_resultado.Text = "Cuenta de cobro generada correctamente";
+                            }
+                        }
+                    }
+                    ConexionVerificar.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                lbl_resultado.Text = "Se ha presentado el siguiente error: " + ex.ToString();
+                return;
+            }
+
         }
     }
 }

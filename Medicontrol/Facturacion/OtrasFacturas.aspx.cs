@@ -185,7 +185,6 @@ namespace Medicontrol.Facturacion
                 else
                 {
                     lbl_resultado.Text = "Se ha presentado un error: " + ex.ToString();
-
                 }
             }
         }

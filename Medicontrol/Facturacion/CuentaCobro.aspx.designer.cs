@@ -103,22 +103,22 @@ namespace Medicontrol.Facturacion {
         protected global::System.Web.UI.WebControls.Button btn_cargar;
         
         /// <summary>
-        /// lbl_selectodo control.
+        /// gridPacienteFactura control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_selectodo;
+        protected global::System.Web.UI.WebControls.GridView gridPacienteFactura;
         
         /// <summary>
-        /// chk_selectodo control.
+        /// lnkDummy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chk_selectodo;
+        protected global::System.Web.UI.WebControls.LinkButton lnkDummy;
         
         /// <summary>
         /// btn_guardar control.
@@ -128,5 +128,41 @@ namespace Medicontrol.Facturacion {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_guardar;
+        
+        /// <summary>
+        /// NumCuentaCobro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label NumCuentaCobro;
+        
+        /// <summary>
+        /// mensajeCuenta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label mensajeCuenta;
+        
+        /// <summary>
+        /// btn_generarSi control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_generarSi;
+        
+        /// <summary>
+        /// btn_generarNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_generarNo;
     }
 }

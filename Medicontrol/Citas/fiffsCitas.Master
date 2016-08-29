@@ -179,9 +179,20 @@
                                                         <a href="../Facturacion/FacturaCapitadaActualizar.aspx">
                                                             <asp:Literal ID="Literal10" runat="server" Text="Modificar" /></a>
                                                     </li>
-
+                                                     <li>
+                                                        <a href="../Facturacion/FacturaCapitadas.aspx">
+                                                            <asp:Literal ID="Literal24" runat="server" Text="Otras Facturas" /></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="../Facturacion/FacturaCapitadaActualizar.aspx">
+                                                            <asp:Literal ID="Literal25" runat="server" Text="Modificar Otras Facturas" /></a>
+                                                    </li>
                                                 </ul>
 
+                                            </li>
+                                             <li>
+                                                <a href="../Facturacion/CuentaCobro.aspx">
+                                                    <asp:Literal ID="Literal26" runat="server" Text="Cuenta de Cobro" /></a>
                                             </li>
                                         </ul>
 
@@ -213,7 +224,7 @@
                                 <!-- /.nav-second-level -->
                             </li>
                     <li>
-                                <a href="#"><i class="fa fa-h-square"></i>
+                                <a href="#"><i class="fa fa-calendar-o"></i>
                                     <asp:Literal ID="Literal11" runat="server" Text="SIFFS Citas" /><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
