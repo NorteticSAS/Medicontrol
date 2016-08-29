@@ -1,0 +1,315 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="fiffsCitas.master.cs" Inherits="Medicontrol.Citas.fiffsCitas" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>SIFSS</title>
+    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../Content/sb-admin-2.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link href="../Content/datepicker.css" rel="stylesheet" />
+
+
+</head>
+
+
+<body>
+    <form id="form1" runat="server">
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <!-- /.navbar-header -->
+
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <a href="../Index.aspx">
+                            <i class="fa fa-home fa-fw"></i>
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <asp:Label runat="server" ID="UserName"></asp:Label>&nbsp;<i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                           
+                            
+                            <li>
+                                <a><i class="fa fa-sign-out fa-fw"></i>
+                                    <asp:Button OnClick="btn_salir_Click" runat="server" ID="btn_salir" ForeColor="Black" Text="Salir del Sistema" CssClass="btn btn-link" /></a>
+                            </li>
+                        </ul>
+
+                        <!-- /.dropdown-user -->
+                    </li>
+
+                </ul>
+
+                <!-- /.navbar-top-links -->
+                <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+                        <ul class="nav" id="side-menu">
+                            <li>
+                                <asp:Image Height="200px" ID="Image1" CssClass="img-responsive" ImageUrl="~/Imagenes/logoimsalud.jpg" runat="server" Width="250px" />
+                            </li>
+
+                            <li>
+                                <a href="#"><i class="fa fa-building fa-fw"></i>
+                                    <asp:Literal ID="MAdministracion" runat="server" Text="SIFFS Administración" /><span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="#">
+                                            <asp:Literal ID="TablasBasicas" runat="server" Text="Tablas Básicas" /><span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="../Administracion/BuscarProfesional.aspx">
+                                                    <asp:Literal ID="almacen" runat="server" Text="Profesionales" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="../Administracion/BuscarUsuario.aspx">
+                                                    <asp:Literal ID="Literal1" runat="server" Text="Usuarios" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="../Administracion/BuscarTarifarios.aspx">
+                                                    <asp:Literal ID="Literal18" runat="server" Text="Tarifarios" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="../Administracion/BuscarPlan.aspx">
+                                                    <asp:Literal ID="Literal12" runat="server" Text="Planes" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="../Administracion/BuscarProcedimiento.aspx">
+                                                    <asp:Literal ID="Literal13" runat="server" Text="Procedimientos" /></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <asp:Literal ID="Contratacion" runat="server" Text="Contratación" /><span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="../Administracion/BuscarEntidad.aspx">
+                                                    <asp:Literal ID="entidades" runat="server" Text="Entidades" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="../Administracion/Contratos.aspx">
+                                                    <asp:Literal ID="contratos" runat="server" Text="Contratos" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="../Administracion/PlanesContratos.aspx">
+                                                    <asp:Literal ID="planescontratos" runat="server" Text="Planes por Contrato" /></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <asp:Literal ID="Literal14" runat="server" Text="Actualizacion Datos" /><span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="../Administracion/ActualizarCapitados.aspx">
+                                                    <asp:Literal ID="Literal15" runat="server" Text="Contratos Capitados" /></a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <asp:Literal ID="Literal16" runat="server" Text="Promoción y Prevención" /><span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="../Administracion/ContratosPYP.aspx">
+                                                    <asp:Literal ID="Literal17" runat="server" Text="Metas contratos PYP" /></a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+
+                            <li>
+                                <a href="#"><i class="fa fa-calculator"></i>
+                                    <asp:Literal ID="MFacturacion" runat="server" Text="SIFFS Facturación" /><span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+
+                                    <li>
+                                        <a href="#">
+                                            <asp:Literal ID="Literal3" runat="server" Text="Facturas" /><span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="../Facturacion/ModificarPaciente.aspx">
+                                                    <asp:Literal ID="Literal2" runat="server" Text="Pacientes" /></a>
+
+                                            </li>
+                                            <li>
+                                                <a href="../Facturacion/NuevaFactura.aspx">
+                                                    <asp:Literal ID="Literal4" runat="server" Text="Generar Factura" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="../Facturacion/ConsultarFacturas.aspx">
+                                                    <asp:Literal ID="Literal5" runat="server" Text="Consultar Facturas" /></a>
+                                            </li>
+                                             <li>
+                                                <a href="#">
+                                                    <asp:Literal ID="Literal8" runat="server" Text="Facturas Capitadas" /><span class="fa arrow"></span></a>
+                                                <ul class="nav nav-third-level">
+                                                    <li>
+                                                        <a href="../Facturacion/FacturaCapitadas.aspx">
+                                                            <asp:Literal ID="Literal9" runat="server" Text="Nueva" /></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="../Facturacion/FacturaCapitadaActualizar.aspx">
+                                                            <asp:Literal ID="Literal10" runat="server" Text="Modificar" /></a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <asp:Literal ID="Literal6" runat="server" Text="Admisiones" /><span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="../Facturacion/Admisiones.aspx">
+                                                    <asp:Literal ID="Literal19" runat="server" Text="Admisiones" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="../Facturacion/ConsultarAdmisiones.aspx">
+                                                    <asp:Literal ID="Literal20" runat="server" Text="Consultar - Cambiar estado Admision" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="../Facturacion/AsignarProcedimientos.aspx">
+                                                    <asp:Literal ID="Literal21" runat="server" Text="Asignar Procedimientos" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="../Facturacion/OrdenSalida.aspx">
+                                                    <asp:Literal ID="Literal7" runat="server" Text="Egresos" /></a>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                    <li>
+                                <a href="#"><i class="fa fa-h-square"></i>
+                                    <asp:Literal ID="Literal11" runat="server" Text="SIFFS Citas" /><span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="#"><i class="fa fa-plus-square"></i>
+                                            <asp:Literal ID="Literal22" runat="server" Text="Citas Médicas" /><span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="AsignarCitas.aspx">
+                                                    <asp:Literal ID="Literal23" runat="server" Text="Asignar Citas" /></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                   <%-- <li>
+                                        <a href="#"><i class="fa fa-plus-square"></i>
+                                            <asp:Literal ID="Literal9" runat="server" Text="Primer Nivel" /><span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="Administrativa/RegistroPersonal.aspx">
+                                                    <asp:Literal ID="Literal10" runat="server" Text="Segundo Nivel" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="Administrativa/Desvinculacion.aspx">
+                                                    <asp:Literal ID="Literal11" runat="server" Text="Segundo Nivel" /></a>
+                                            </li>
+                                        </ul>
+                                    </li>--%>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                               <li>
+                                <a href="#"><i class="fa fa-h-square"></i>
+                                    <asp:Literal ID="MHistoriaClinica" runat="server" Text="SIFFS Historia Clinica" /><span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                   <%-- <li>
+                                        <a href="#"><i class="fa fa-plus-square"></i>
+                                            <asp:Literal ID="Literal71" runat="server" Text="Citas" /><span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="Administrativa/Almacen.aspx">
+                                                    <asp:Literal ID="Literal81" runat="server" Text="Generar Nueva Cita" /></a>
+                                            </li>
+                                        </ul>
+                                    </li>--%>
+                                   <%-- <li>
+                                        <a href="#"><i class="fa fa-plus-square"></i>
+                                            <asp:Literal ID="Literal9" runat="server" Text="Primer Nivel" /><span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="Administrativa/RegistroPersonal.aspx">
+                                                    <asp:Literal ID="Literal10" runat="server" Text="Segundo Nivel" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="Administrativa/Desvinculacion.aspx">
+                                                    <asp:Literal ID="Literal11" runat="server" Text="Segundo Nivel" /></a>
+                                            </li>
+                                        </ul>
+                                    </li>--%>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <!-- /.sidebar-collapse -->
+                </div>
+                <!-- /.navbar-static-side -->
+            </nav>
+
+            <div id="page-wrapper">
+
+                <div class="row">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+
+
+
+    </form>
+    <!--footer-->
+    <script src="../Scripts/js/bootstrap.min.js"></script>
+    <script src="../Calendario/bootstrap-datepicker.js"></script>
+    <script src="../Scripts/metisMenu.min.js"></script>
+    <script src="../Scripts/sb-admin-2.js"></script>
+    <script src="../Calendario/ini.js"></script>
+</body>
+
+</html>
