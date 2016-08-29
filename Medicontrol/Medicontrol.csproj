@@ -205,6 +205,8 @@
     <Content Include="Facturacion\NuevoPaciente.aspx" />
     <Content Include="Facturacion\ConsultarPaciente.aspx" />
     <Content Include="Facturacion\ModificarPaciente.aspx" />
+    <Content Include="Facturacion\CuentasporCobrar.aspx" />
+    <Content Include="Facturacion\Abonos.aspx" />
     <Content Include="Imagenes\Delete-icon %281%29.png" />
     <Content Include="Imagenes\ico-print.png" />
     <Content Include="Imagenes\logoimsalud.jpg" />
@@ -620,6 +622,20 @@
     </Compile>
     <Compile Include="Facturacion\ModificarPaciente.aspx.designer.cs">
       <DependentUpon>ModificarPaciente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\CuentasporCobrar.aspx.cs">
+      <DependentUpon>CuentasporCobrar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Facturacion\CuentasporCobrar.aspx.designer.cs">
+      <DependentUpon>CuentasporCobrar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Abonos.aspx.cs">
+      <DependentUpon>Abonos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Facturacion\Abonos.aspx.designer.cs">
+      <DependentUpon>Abonos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
