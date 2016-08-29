@@ -68,7 +68,7 @@ namespace Medicontrol.Facturacion
             {
                 string facturaNum = leer[0].ToString();
                 DataTable dt = new DataTable();
-
+                string mensaje = "y aca vamos";
                 dt.Columns.Add("1");
                 dt.Columns.Add("2");
                 dt.Columns.Add("3");
