@@ -200,11 +200,11 @@
                                                     <asp:Literal ID="Literal27" runat="server" Text="Cuentas por Cobrar a Pacientes" /><span class="fa arrow"></span></a>
                                                 <ul class="nav nav-third-level">
                                                     <li>
-                                                        <a href="Facturacion/FacturaCapitadas.aspx">
+                                                        <a href="Facturacion/CuentasporCobrar.aspx">
                                                             <asp:Literal ID="Literal28" runat="server" Text="Cuentas por Cobrar" /></a>
                                                     </li>
                                                     <li>
-                                                        <a href="Facturacion/FacturaCapitadaActualizar.aspx">
+                                                        <a href="Facturacion/Abonos.aspx">
                                                             <asp:Literal ID="Literal29" runat="server" Text="Abonos" /></a>
                                                     </li>
                                                 </ul>

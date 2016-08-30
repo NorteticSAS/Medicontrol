@@ -194,6 +194,20 @@
                                                 <a href="CuentaCobro.aspx">
                                                     <asp:Literal ID="Literal26" runat="server" Text="Cuenta de Cobro" /></a>
                                             </li>
+                                             <li>
+                                                <a href="#">
+                                                    <asp:Literal ID="Literal27" runat="server" Text="Cuentas por Cobrar a Pacientes" /><span class="fa arrow"></span></a>
+                                                <ul class="nav nav-third-level">
+                                                    <li>
+                                                        <a href="CuentasporCobrar.aspx">
+                                                            <asp:Literal ID="Literal28" runat="server" Text="Cuentas por Cobrar" /></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="Abonos.aspx">
+                                                            <asp:Literal ID="Literal29" runat="server" Text="Abonos" /></a>
+                                                    </li>
+                                                </ul>
+                                             </li>
                                         </ul>
 
                                     </li>

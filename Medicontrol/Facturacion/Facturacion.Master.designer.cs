@@ -292,6 +292,33 @@ namespace Medicontrol.Facturacion {
         protected global::System.Web.UI.WebControls.Literal Literal26;
         
         /// <summary>
+        /// Literal27 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Literal27;
+        
+        /// <summary>
+        /// Literal28 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Literal28;
+        
+        /// <summary>
+        /// Literal29 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Literal29;
+        
+        /// <summary>
         /// Literal6 control.
         /// </summary>
         /// <remarks>
