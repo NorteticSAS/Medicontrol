@@ -511,7 +511,7 @@ namespace Medicontrol.Facturacion
             }
             else
             {
-                lbl_resultado.Text = "El Proedimiento no existe o se encuenta inactivo por favor verifique";
+                lbl_resultado.Text = "El Procedimiento no existe o se encuenta inactivo por favor verifique";
                 return;
             }
             conexion.Close();

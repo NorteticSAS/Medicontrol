@@ -409,23 +409,30 @@ namespace Medicontrol.Facturacion
             }
             else
             {
-                
-                lbl_resultado.Text = "Infome de AIU guardado";
-                txt_buscar.Text = string.Empty;
-                txt_cedula.Text= string.Empty;
-                txt_nombre.Text= string.Empty;
-                txt_fecha.Text=string.Empty;
-                txt_hora.Text= string.Empty;
-                ddl_causas.ClearSelection();
-                ddl_cobertura.ClearSelection();
-                ddl_tipodoc.ClearSelection();
-                ddl_triage.ClearSelection();
-                txt_entidad.Text= string.Empty;
-                txt_contrato.Text= string.Empty;
-                txt_estrato.Text= string.Empty;
-                txt_edad.Text= string.Empty;
-                txt_sexo.Text= string.Empty;
-
+                string update = "UPDATE Consecutivos SET NumActual='"+this.txt_numInforme.Text+"' WHERE TipoCont='21'";
+                if (Datos.insertar(update))
+                {
+                    lbl_resultado.Text = "No se modificó la información, verifique";
+                    return;
+                }
+                else
+                {
+                    lbl_resultado.Text = "Infome de AIU guardado";
+                    txt_buscar.Text = string.Empty;
+                    txt_cedula.Text = string.Empty;
+                    txt_nombre.Text = string.Empty;
+                    txt_fecha.Text = string.Empty;
+                    txt_hora.Text = string.Empty;
+                    ddl_causas.ClearSelection();
+                    ddl_cobertura.ClearSelection();
+                    ddl_tipodoc.ClearSelection();
+                    ddl_triage.ClearSelection();
+                    txt_entidad.Text = string.Empty;
+                    txt_contrato.Text = string.Empty;
+                    txt_estrato.Text = string.Empty;
+                    txt_edad.Text = string.Empty;
+                    txt_sexo.Text = string.Empty;
+                }
             }
         }
     }

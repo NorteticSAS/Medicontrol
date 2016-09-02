@@ -208,6 +208,7 @@
     <Content Include="Facturacion\CuentasporCobrar.aspx" />
     <Content Include="Facturacion\Abonos.aspx" />
     <Content Include="Facturacion\AT2-InformeAtencionInicialUrgencias.aspx" />
+    <Content Include="Facturacion\AT3-SolicitudServiciosSalud.aspx" />
     <Content Include="Imagenes\Delete-icon %281%29.png" />
     <Content Include="Imagenes\ico-print.png" />
     <Content Include="Imagenes\logoimsalud.jpg" />
@@ -644,6 +645,13 @@
     </Compile>
     <Compile Include="Facturacion\AT2-InformeAtencionInicialUrgencias.aspx.designer.cs">
       <DependentUpon>AT2-InformeAtencionInicialUrgencias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\AT3-SolicitudServiciosSalud.aspx.cs">
+      <DependentUpon>AT3-SolicitudServiciosSalud.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Facturacion\AT3-SolicitudServiciosSalud.aspx.designer.cs">
+      <DependentUpon>AT3-SolicitudServiciosSalud.aspx</DependentUpon>
     </Compile>
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
