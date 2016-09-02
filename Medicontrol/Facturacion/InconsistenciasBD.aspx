@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Facturacion/Facturacion.Master" AutoEventWireup="true" CodeBehind="AT2-InformeAtencionInicialUrgencias.aspx.cs" Inherits="Medicontrol.Facturacion.WebForm6" EnableEventValidation="false" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Facturacion/Facturacion.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="InconsistenciasBD.aspx.cs" Inherits="Medicontrol.Facturacion.WebForm8" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>
@@ -17,17 +18,17 @@
             background-color: #FFFFBF;
         }
     </style>
-    <h4>Informe de la Atención Inicial de Urgencias - Res. 3047 de 2008. Anexo técnico No. 2</h4>
+    <h4>Inconsistencias Base de Datos</h4>
     <br />
     <div class="alert alert-danger">
         <asp:Label runat="server" ID="lbl_resultado" Text=""></asp:Label>
     </div>
     <asp:Label runat="server" ID="CodigoSesion" Text="" Visible="false"></asp:Label>
-        <asp:Label runat="server" ID="FechaNacimientoPac" Visible="false"></asp:Label>
-  <asp:Label runat="server" ID="CodEntidad" Visible="false"></asp:Label>
+    <asp:Label runat="server" ID="FechaNacimientoPac" Visible="false"></asp:Label>
+    <asp:Label runat="server" ID="CodEntidad" Visible="false"></asp:Label>
     <asp:Label runat="server" ID="CodContrato" Visible="false"></asp:Label>
     <asp:Label runat="server" ID="CodTipoContrato" Visible="false"></asp:Label>
-     <asp:Label runat="server" ID="txt_tipodocvictimacc" Text="" Visible="false"></asp:Label>
+    <asp:Label runat="server" ID="txt_tipodocvictimacc" Text="" Visible="false"></asp:Label>
     <asp:Label runat="server" ID="txt_tipodocvictimace" Text="" Visible="false"></asp:Label>
     <asp:Label runat="server" ID="txt_tipodocvictimapa" Text="" Visible="false"></asp:Label>
     <asp:Label runat="server" ID="txt_tipodocvictimati" Text="" Visible="false"></asp:Label>
@@ -45,19 +46,19 @@
         </asp:Panel>
     </div>
     <br />
-     <div class="form-group">
+    <div class="form-group">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
             <asp:Label runat="server" ID="Label1" Text="Documento de Identidad"></asp:Label>
             <asp:TextBox runat="server" CssClass="form-control" ID="txt_cedula" ReadOnly="true"></asp:TextBox>
             <br />
         </div>
-       
+
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
             <asp:Label runat="server" ID="Label3" Text="Numero de Informe"></asp:Label>
             <asp:TextBox runat="server" CssClass="form-control" ID="txt_numInforme" ReadOnly="true"></asp:TextBox>
             <br />
         </div>
-        
+
     </div>
     <div class="form-group">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
@@ -109,21 +110,34 @@
     </div>
     <hr />
     <div class="form-group">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <asp:Label runat="server" ID="noexiste" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="nocorresponde" Text="" Visible="false"></asp:Label>
+            <asp:Label runat="server" ID="Label2" Text="Tipo de Inconsistencia"></asp:Label>
+            <asp:DropDownList runat="server" ID="ddl_inconsistencia" CssClass="form-control">
+                <asp:ListItem Value="0" Text="Seleccionar"></asp:ListItem>
+                <asp:ListItem Value="1" Text="El usuario no existe en la base de datos"></asp:ListItem>
+                <asp:ListItem Value="2" Text="Los datos del usuario no corresponden con los del documento de identificición presentado"></asp:ListItem>
+            </asp:DropDownList>
+            <br />
+        </div>
+    </div>
+    <div class="form-group">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
             <asp:Label runat="server" ID="lbl_causa" Text="Tipo de Documento"></asp:Label>
             <asp:DropDownList runat="server" ID="ddl_tipodoc" CssClass="form-control">
             </asp:DropDownList>
             <br />
         </div>
-         <asp:Label runat="server" ID="Label5" Text="" Visible="false"></asp:Label>
-                <asp:Label runat="server" ID="coberturaContributivo" Text="" Visible="false"></asp:Label>
-                <asp:Label runat="server" ID="coberturasubsidiototal" Text="" Visible="false"></asp:Label>
-                <asp:Label runat="server" ID="coberturasubsidioparcial" Text="" Visible="false"></asp:Label>
-                <asp:Label runat="server" ID="coberturapobreconsisben" Text="" Visible="false"></asp:Label>
-                <asp:Label runat="server" ID="coberturapobresinsisben" Text="" Visible="false"></asp:Label>
-                <asp:Label runat="server" ID="coberturadesplazados" Text="" Visible="false"></asp:Label>
-                <asp:Label runat="server" ID="coberturaplanadicional" Text="" Visible="false"></asp:Label>
-                <asp:Label runat="server" ID="coberturaotro" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="Label5" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="coberturaContributivo" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="coberturasubsidiototal" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="coberturasubsidioparcial" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="coberturapobreconsisben" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="coberturapobresinsisben" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="coberturadesplazados" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="coberturaplanadicional" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="coberturaotro" Text="" Visible="false"></asp:Label>
 
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
             <asp:Label runat="server" ID="lbl_autorizacion" Text="Cobertura en Salud"></asp:Label>
@@ -137,33 +151,100 @@
                 <asp:ListItem Value="6" Text="Desplazados"></asp:ListItem>
                 <asp:ListItem Value="7" Text="Plan adicional de Salúd"></asp:ListItem>
                 <asp:ListItem Value="8" Text="Otro"></asp:ListItem>
-                
-            </asp:DropDownList>            <br />
-        </div>
-    </div>
-    <hr />
-    
-    <hr />
-     <div class="form-group">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-            <h3>Información de la Atención</h3><br />
-            <asp:Label runat="server" ID="Label2" Text="Origen de la Atención"></asp:Label>
-            <asp:DropDownList runat="server" ID="ddl_causas" CssClass="form-control">
+
             </asp:DropDownList>
             <br />
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-            <h3 style="visibility:hidden">hola</h3><br />
-            <asp:Label runat="server" ID="Label4" Text="Clasificación Triage"></asp:Label>
-            <asp:DropDownList runat="server" ID="ddl_triage" CssClass="form-control">
-                <asp:ListItem Value="0" Text="Seleccione"></asp:ListItem>
-                <asp:ListItem Value="1" Text="1. Rojo"></asp:ListItem>
-                <asp:ListItem Value="2" Text="2. Amarillo"></asp:ListItem>
-                <asp:ListItem Value="3" Text="3. Verde"></asp:ListItem>
-            </asp:DropDownList>            <br />
+    </div>
+    <hr />
+    <div class="form-group">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4>Variable presuntamente incorrecta</h4>
         </div>
     </div>
     <div class="form-group">
+        <asp:Label runat="server" ID="primernombre" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="segundonombre" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="primerapellido" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="segundoapellido" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="tipodocumento" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="numdocumento" Text="" Visible="false"></asp:Label>
+        <asp:Label runat="server" ID="fechaNacim" Text="" Visible="false"></asp:Label>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+            <asp:CheckBox runat="server" ID="chk_primerNombre" Text="Primer Nombre" Font-Size="Medium" />
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+            <asp:CheckBox runat="server" ID="chk_segundoNombre" Text="Segundo Nombre" Font-Size="Medium" />
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+            <asp:CheckBox runat="server" ID="chk_primerApellido" Text="Primer Apellido" Font-Size="Medium" />
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+            <asp:CheckBox runat="server" ID="chk_segundoApellido" Text="Segundo Apellido" Font-Size="Medium" />
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+            <asp:CheckBox runat="server" ID="chk_Tipodocumento" Text="Tipo de Documento" Font-Size="Medium" />
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+            <asp:CheckBox runat="server" ID="chk_numDocumento" Text="Numero de Documento" Font-Size="Medium" />
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+            <asp:CheckBox runat="server" ID="chk_fechaNacimiento" Text="Fecha de Nacimiento" Font-Size="Medium" />
+        </div>
+    </div>
+     <div class="form-group">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4>Variable presuntamente incorrecta</h4>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <asp:Label runat="server" ID="lbl_cie10" Text="Primer Nombre"></asp:Label>
+            <asp:TextBox ReadOnly="false" runat="server" CssClass="form-control" ID="txt_primerNombre" />
+            <br />        
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <asp:Label runat="server" ID="Label4" Text="Segundo Nombre"></asp:Label>
+            <asp:TextBox ReadOnly="false" runat="server" CssClass="form-control" ID="txt_segundoNombre" />
+            <br />        
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <asp:Label runat="server" ID="Label6" Text="Primer Apellido"></asp:Label>
+            <asp:TextBox ReadOnly="false" runat="server" CssClass="form-control" ID="txt_primerApellido" />
+            <br />        
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <asp:Label runat="server" ID="Label7" Text="Segundo Apellido"></asp:Label>
+            <asp:TextBox ReadOnly="false" runat="server" CssClass="form-control" ID="txt_segundoApellido" />
+            <br />        
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <asp:Label runat="server" ID="Label8" Text="Tipo de Documento"></asp:Label>
+             <asp:DropDownList runat="server" ID="ddl_tipodoc2" CssClass="form-control">
+            </asp:DropDownList>
+            <br />        
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <asp:Label runat="server" ID="Label9" Text="Numero de Documento"></asp:Label>
+            <asp:TextBox ReadOnly="false" runat="server" CssClass="form-control" ID="txt_numDocumento" />
+            <br />        
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <asp:Label runat="server" ID="Label10" Text="Fecha de Nacimiento"></asp:Label>
+            <asp:TextBox ReadOnly="false" runat="server" CssClass="form-control birthday" ID="txt_fechaNacimiento" />
+            <br />        
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <asp:Label runat="server" ID="Label11" Text="Observaciones"></asp:Label>
+            <asp:TextBox ReadOnly="false" runat="server" CssClass="form-control" ID="txt_observaciones" />
+            <br />        
+        </div>
+        </div>
+    <hr />
+
+     <div class="form-group">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
             <br />
             <asp:Button runat="server" ID="btn_guardar" Text="Guardar" OnClick="btn_guardar_Click" CssClass="btn btn-primary" />
@@ -172,8 +253,8 @@
         </div>
     </div>
 
-     <script src="../Scripts/bootstrapcantidad/bootstrap.min.js"></script>
-     <script type="text/javascript">
+    <script src="../Scripts/bootstrapcantidad/bootstrap.min.js"></script>
+    <script type="text/javascript">
         function ShowPopupContratos() {
             $("#btnContratos").click();
         }
@@ -224,7 +305,7 @@
     </div>
     <!-- /.SELECCIONAR CONTRATOS -->
 
-     <script type="text/javascript">
+    <script type="text/javascript">
         function ShowPopupNoexiste() {
             $("#noUsuarios").click();
         }

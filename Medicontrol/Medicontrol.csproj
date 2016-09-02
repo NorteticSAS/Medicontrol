@@ -209,6 +209,7 @@
     <Content Include="Facturacion\Abonos.aspx" />
     <Content Include="Facturacion\AT2-InformeAtencionInicialUrgencias.aspx" />
     <Content Include="Facturacion\AT3-SolicitudServiciosSalud.aspx" />
+    <Content Include="Facturacion\InconsistenciasBD.aspx" />
     <Content Include="Imagenes\Delete-icon %281%29.png" />
     <Content Include="Imagenes\ico-print.png" />
     <Content Include="Imagenes\logoimsalud.jpg" />
@@ -493,6 +494,11 @@
       <DependentUpon>Construccion.aspx</DependentUpon>
     </Compile>
     <Compile Include="ExcelPackageExtensions.cs" />
+    <Compile Include="Facturacion\DatosAT2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatosAT2.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Facturacion\FacturaCap.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -653,6 +659,13 @@
     <Compile Include="Facturacion\AT3-SolicitudServiciosSalud.aspx.designer.cs">
       <DependentUpon>AT3-SolicitudServiciosSalud.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\InconsistenciasBD.aspx.cs">
+      <DependentUpon>InconsistenciasBD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Facturacion\InconsistenciasBD.aspx.designer.cs">
+      <DependentUpon>InconsistenciasBD.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -748,6 +761,17 @@
     <Content Include="Citas\CitasDS.xss">
       <DependentUpon>CitasDS.xsd</DependentUpon>
     </Content>
+    <Content Include="Facturacion\DatosAT2.xsc">
+      <DependentUpon>DatosAT2.xsd</DependentUpon>
+    </Content>
+    <None Include="Facturacion\DatosAT2.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DatosAT2.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Facturacion\DatosAT2.xss">
+      <DependentUpon>DatosAT2.xsd</DependentUpon>
+    </Content>
     <None Include="Facturacion\FacturaCap.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -830,6 +854,8 @@
     <EmbeddedResource Include="Reportes\HojaUrgencias.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RepAt3.rdlc" />
+    <EmbeddedResource Include="Reportes\Res3047_At2.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

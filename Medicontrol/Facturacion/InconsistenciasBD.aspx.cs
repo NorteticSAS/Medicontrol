@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace Medicontrol.Facturacion
 {
-    public partial class WebForm6 : System.Web.UI.Page
+    public partial class WebForm8 : System.Web.UI.Page
     {
         IngresarDatos Datos = new IngresarDatos();
         private string ruta = ConfigurationManager.ConnectionStrings["System-conection"].ConnectionString;
@@ -32,19 +32,19 @@ namespace Medicontrol.Facturacion
             //txt_hora.Text = currentTime.ToLongTimeString();
             if (!IsPostBack)
             {
-                Datos.consultar("SELECT * FROM CausaExterna ORDER BY Descripcion", "CausaExterna");
-                this.ddl_causas.DataSource = Datos.ds.Tables["CausaExterna"];
-                this.ddl_causas.DataTextField = "Descripcion";
-                this.ddl_causas.DataValueField = "Id";
-                this.ddl_causas.DataBind();
-                ddl_causas.Items.Insert(0, new ListItem("Seleccione causa externa", "0"));
-
                 Datos.consultar("SELECT * FROM TipoDocumento ORDER BY NomDocumento", "TipoDocumento");
                 this.ddl_tipodoc.DataSource = Datos.ds.Tables["TipoDocumento"];
                 this.ddl_tipodoc.DataTextField = "NomDocumento";
                 this.ddl_tipodoc.DataValueField = "CodDocumento";
                 this.ddl_tipodoc.DataBind();
                 ddl_tipodoc.Items.Insert(0, new ListItem("Seleccione Documento", "0"));
+
+                Datos.consultar("SELECT * FROM TipoDocumento ORDER BY NomDocumento", "TipoDocumento");
+                this.ddl_tipodoc2.DataSource = Datos.ds.Tables["TipoDocumento"];
+                this.ddl_tipodoc2.DataTextField = "NomDocumento";
+                this.ddl_tipodoc2.DataValueField = "CodDocumento";
+                this.ddl_tipodoc2.DataBind();
+                ddl_tipodoc2.Items.Insert(0, new ListItem("Seleccione Documento", "0"));
             }
         }
 
@@ -84,6 +84,21 @@ namespace Medicontrol.Facturacion
             return str;
         }
 
+        private void fillgrilla()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection cn = new SqlConnection(ruta))
+            {
+                string sql2 = "SELECT Entidad.Codigo AS EntidadCodigo, Entidad.NombreEntidad AS EntidadNombre, Contratos.Codigo AS ContratoCodigo, Contratos.Descripcion AS ContratoDescripcion, Contratos.TipoContrato AS ContratoTipo FROM Pacientes INNER JOIN (Entidad INNER JOIN (Contratos INNER JOIN PacientesEntidadContrato ON (Contratos.Codigo = PacientesEntidadContrato.CodContrato) AND (Contratos.Entidad = PacientesEntidadContrato.CodEntidad)) ON Entidad.Codigo = Contratos.Entidad) ON Pacientes.Documento = PacientesEntidadContrato.Documento WHERE Contratos.Estado = 'Activo' AND Pacientes.Documento= '" + this.txt_buscar.Text + "'";
+                SqlDataAdapter da = new SqlDataAdapter(sql2, cn);
+                //SqlDataAdapter da = new SqlDataAdapter("SELECT Id, CodEntidad, NombreEntidad, CodContrato, NombreContrato, Documento FROM PacientesEntidadContrato WHERE Documento='" + this.txt_documento.Text + "'", cn);
+                da.Fill(dt);
+            }
+            gridPacienteContrato.DataSource = dt;
+
+            gridPacienteContrato.DataBind();
+
+        }
 
         protected void btn_buscarPaciente_Click(object sender, EventArgs e)
         {
@@ -150,7 +165,7 @@ namespace Medicontrol.Facturacion
                         CodTipoContrato.Text = leer2["ContratoTipo"].ToString();
                     }
                 }
-                if(count==0)
+                if (count == 0)
                 {
                     lbl_resultado.Text = "El usuario no tiene entidad ni contrato asignados";
                     return;
@@ -161,22 +176,6 @@ namespace Medicontrol.Facturacion
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", "ShowPopupNoexiste();", true);
                 this.lbl_mensajeUsuario.Text = "El usuario no existe. ¿Desea Crearlo?";
             }
-        }
-
-        private void fillgrilla()
-        {
-            DataTable dt = new DataTable();
-            using (SqlConnection cn = new SqlConnection(ruta))
-            {
-                string sql2 = "SELECT Entidad.Codigo AS EntidadCodigo, Entidad.NombreEntidad AS EntidadNombre, Contratos.Codigo AS ContratoCodigo, Contratos.Descripcion AS ContratoDescripcion, Contratos.TipoContrato AS ContratoTipo FROM Pacientes INNER JOIN (Entidad INNER JOIN (Contratos INNER JOIN PacientesEntidadContrato ON (Contratos.Codigo = PacientesEntidadContrato.CodContrato) AND (Contratos.Entidad = PacientesEntidadContrato.CodEntidad)) ON Entidad.Codigo = Contratos.Entidad) ON Pacientes.Documento = PacientesEntidadContrato.Documento WHERE Contratos.Estado = 'Activo' AND Pacientes.Documento= '" + this.txt_buscar.Text + "'";
-                SqlDataAdapter da = new SqlDataAdapter(sql2, cn);
-                //SqlDataAdapter da = new SqlDataAdapter("SELECT Id, CodEntidad, NombreEntidad, CodContrato, NombreContrato, Documento FROM PacientesEntidadContrato WHERE Documento='" + this.txt_documento.Text + "'", cn);
-                da.Fill(dt);
-            }
-            gridPacienteContrato.DataSource = dt;
-
-            gridPacienteContrato.DataBind();
-
         }
 
         protected void gridPacienteContrato_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -213,13 +212,28 @@ namespace Medicontrol.Facturacion
             }
         }
 
-        protected void btn_imprimir_Click(object sender, EventArgs e)
+        protected void btn_crearSi_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("NuevoPaciente.aspx");
         }
 
         protected void btn_guardar_Click(object sender, EventArgs e)
         {
+            if(ddl_inconsistencia.SelectedValue.ToString()=="0")
+            {
+                lbl_resultado.Text = "Debe seleccionar un tipo de inconsistencia";
+                return;
+            }
+            if(ddl_inconsistencia.SelectedValue.ToString()=="1")
+            {
+                noexiste.Text = "X";
+                nocorresponde.Text = "";
+            }
+            if (ddl_inconsistencia.SelectedValue.ToString() == "2")
+            {
+                noexiste.Text = "";
+                nocorresponde.Text = "X";
+            }
             if (ddl_tipodoc.SelectedValue.ToString() == "0")
             {
                 lbl_resultado.Text = "Debe seleccionar un documento de identidad";
@@ -296,108 +310,63 @@ namespace Medicontrol.Facturacion
                 txt_tipodocvictimams.Text = "X";
             }
 
-            if(ddl_cobertura.SelectedValue.ToString()=="0")
+            if(chk_primerNombre.Checked==true)
             {
-                lbl_resultado.Text = "Debe seleccionar una opción de cobertura";
-                return;
+                primernombre.Text = "X";
             }
-            if(ddl_cobertura.SelectedValue.ToString()=="1")
+            else
             {
-                coberturaContributivo.Text = "X";
-                coberturasubsidiototal.Text = "";
-                coberturasubsidioparcial.Text = "";
-                coberturapobreconsisben.Text = "";
-                coberturapobresinsisben.Text = "";
-                coberturadesplazados.Text = "";
-                coberturaplanadicional.Text = "";
-                coberturaotro.Text = "";
-               
+                primernombre.Text = "";
             }
-            if (ddl_cobertura.SelectedValue.ToString() == "2")
+            if(chk_segundoNombre.Checked==true)
             {
-                coberturaContributivo.Text = "";
-                coberturasubsidiototal.Text = "X";
-                coberturasubsidioparcial.Text = "";
-                coberturapobreconsisben.Text = "";
-                coberturapobresinsisben.Text = "";
-                coberturadesplazados.Text = "";
-                coberturaplanadicional.Text = "";
-                coberturaotro.Text = "";
-
+                segundonombre.Text = "X";
             }
-            if (ddl_cobertura.SelectedValue.ToString() == "3")
+            else
             {
-                coberturaContributivo.Text = "";
-                coberturasubsidiototal.Text = "";
-                coberturasubsidioparcial.Text = "X";
-                coberturapobreconsisben.Text = "";
-                coberturapobresinsisben.Text = "";
-                coberturadesplazados.Text = "";
-                coberturaplanadicional.Text = "";
-                coberturaotro.Text = "";
-
+                segundonombre.Text = "";
             }
-            if (ddl_cobertura.SelectedValue.ToString() == "4")
+            if(chk_primerApellido.Checked==true)
             {
-                coberturaContributivo.Text = "";
-                coberturasubsidiototal.Text = "";
-                coberturasubsidioparcial.Text = "";
-                coberturapobreconsisben.Text = "X";
-                coberturapobresinsisben.Text = "";
-                coberturadesplazados.Text = "";
-                coberturaplanadicional.Text = "";
-                coberturaotro.Text = "";
-
+                primerapellido.Text = "X";
             }
-            if (ddl_cobertura.SelectedValue.ToString() == "5")
+            else
             {
-                coberturaContributivo.Text = "";
-                coberturasubsidiototal.Text = "";
-                coberturasubsidioparcial.Text = "";
-                coberturapobreconsisben.Text = "";
-                coberturapobresinsisben.Text = "X";
-                coberturadesplazados.Text = "";
-                coberturaplanadicional.Text = "";
-                coberturaotro.Text = "";
-
+                primerapellido.Text = "";
             }
-            if (ddl_cobertura.SelectedValue.ToString() == "6")
+            if(chk_segundoApellido.Checked==true)
             {
-                coberturaContributivo.Text = "";
-                coberturasubsidiototal.Text = "";
-                coberturasubsidioparcial.Text = "";
-                coberturapobreconsisben.Text = "";
-                coberturapobresinsisben.Text = "";
-                coberturadesplazados.Text = "6";
-                coberturaplanadicional.Text = "";
-                coberturaotro.Text = "";
-
+                segundoapellido.Text = "X";
             }
-            if (ddl_cobertura.SelectedValue.ToString() == "7")
+            else
             {
-                coberturaContributivo.Text = "";
-                coberturasubsidiototal.Text = "";
-                coberturasubsidioparcial.Text = "";
-                coberturapobreconsisben.Text = "";
-                coberturapobresinsisben.Text = "";
-                coberturadesplazados.Text = "";
-                coberturaplanadicional.Text = "7";
-                coberturaotro.Text = "";
-
+                segundoapellido.Text = "";
             }
-            if (ddl_cobertura.SelectedValue.ToString() == "8")
+            if(chk_Tipodocumento.Checked==true)
             {
-                coberturaContributivo.Text = "";
-                coberturasubsidiototal.Text = "";
-                coberturasubsidioparcial.Text = "";
-                coberturapobreconsisben.Text = "";
-                coberturapobresinsisben.Text = "";
-                coberturadesplazados.Text = "";
-                coberturaplanadicional.Text = "";
-                coberturaotro.Text = "X";
-
+                tipodocumento.Text = "X";
             }
-
+            else
+            {
+                tipodocumento.Text = "";
+            }
+            if(chk_numDocumento.Checked==true)
+            {
+                numdocumento.Text = "X";
+            }
+            else
+            {
+                numdocumento.Text = "";
+            }
+            if(chk_fechaNacimiento.Checked==true)
+            {
+                fechaNacim.Text = "X";
+            }
+            else
+            {
+                fechaNacim.Text = "";
+            }
+            
             string consecutivo = "SELECT * FROM Consecutivos WHERE TipoCont='21'";
             SqlConnection ConexionConsec = new SqlConnection(ruta);
             SqlCommand comando6 = new SqlCommand(consecutivo, ConexionConsec);
@@ -411,7 +380,13 @@ namespace Medicontrol.Facturacion
             }
             ConexionConsec.Close();
             DateTime fecha = Convert.ToDateTime(ViewHelper.ConvertToDate(txt_fecha.Text));
-            string query = "INSERT INTO Res3047_AT2_AIU(NumInforme, documento, fechainforme, TDI_RC, TDI_TI, TDI_CC, TDI_CE, TDI_PA, TDI_AS, TDI_MS, CS_RC, CS_RST, CS_RSP, CS_CONSISBEN, CS_SINSISBEN, CS_DESPLAZADO, CS_PAS, CS_OTRO, OA_ENFERMEDADGRAL, CodEntidad, CodUsuario) VALUES('"+this.txt_numInforme.Text+ "', '" + this.txt_cedula.Text + "', '" + fecha + "', '" + this.txt_tipodocvictimarc.Text + "', '" + this.txt_tipodocvictimati.Text + "', '" + this.txt_tipodocvictimacc.Text + "', '" + this.txt_tipodocvictimace.Text + "', '" + this.txt_tipodocvictimapa.Text + "', '" + this.txt_tipodocvictimaas.Text + "', '" + this.txt_tipodocvictimams.Text + "', '" + this.coberturaContributivo.Text + "', '" + this.coberturasubsidiototal.Text + "', '" + this.coberturasubsidioparcial.Text + "', '" + this.coberturapobreconsisben.Text + "', '" + this.coberturapobresinsisben.Text + "', '" + this.coberturadesplazados.Text + "', '" + this.coberturaplanadicional.Text + "', '" + this.coberturaotro.Text + "', 'X', '"+this.CodEntidad.Text + "', '"+this.CodigoSesion.Text+"')";
+            DateTime fechanaci;
+            if(txt_fechaNacimiento.Text!=string.Empty)
+            {
+                fechanaci = Convert.ToDateTime(ViewHelper.ConvertToDate(txt_fechaNacimiento.Text));
+            }
+            
+            string query = "INSERT INTO InconsistenciasBD(NumInforme, documento, fechainforme, TipoIncon1, TipoIncon2, TDI_RC, TDI_TI, TDI_CC, TDI_CE, TDI_PA, TDI_AS, TDI_MS, CS_RC, CS_RST, CS_RSP, CS_CONSISBEN, CS_SINSISBEN, CS_DESPLAZADO, CS_PAS, CS_OTRO, VI_APELLIDO1, VI_APELLIDO2, VI_NOMBRE1, VI_NOMBRE2, VI_TIPODOC, VI_NUMDOC, VI_FECHANAC, APELLIDO1, APELLIDO2, NOMBRE1, NOMBRE2, TIPODOC, NUMDOC, FECHANAC, Observaciones, CodEntidad, CodUsuario) VALUES('"+this.txt_numInforme.Text+ "', '"+this.txt_cedula.Text+ "', '"+this.txt_fecha.Text+ "', '"+this.noexiste.Text+ "', '"+this.nocorresponde.Text+ "', '"+this.txt_tipodocvictimarc.Text+ "', '"+this.txt_tipodocvictimati.Text+ "', '"+this.txt_tipodocvictimacc.Text+ "', '"+this.txt_tipodocvictimace.Text+ "', '"+this.txt_tipodocvictimapa.Text+ "', '"+this.txt_tipodocvictimaas.Text+ "', '"+this.txt_tipodocvictimams.Text+ "', '"+this.coberturaContributivo.Text+ "', '"+this.coberturasubsidiototal.Text+ "', '"+this.coberturasubsidioparcial.Text+ "', '"+this.coberturapobreconsisben.Text+ "', '"+this.coberturapobresinsisben.Text+ "', '"+this.coberturadesplazados.Text+ "', '"+this.coberturaplanadicional.Text+ "', '"+this.coberturaotro.Text+ "', '"+this.primerapellido.Text+ "', '"+this.segundoapellido.Text+ "', '"+this.primernombre.Text+ "', '"+this.segundonombre.Text+ "', '"+this.tipodocumento.Text+ "', '"+this.numdocumento.Text+ "', '"+this.fechaNacim.Text+ "', '"+this.txt_primerApellido.Text+ "', '"+this.txt_segundoApellido.Text+ "', '"+this.txt_primerNombre.Text+ "', '"+this.txt_segundoNombre.Text+ "', '"+this.ddl_tipodoc2.SelectedItem+ "', '"+this.txt_numDocumento.Text+ "', '"+this.txt_fechaNacimiento.Text+"', '"+this.txt_observaciones.Text+"', '"+this.CodEntidad.Text+ "', '"+this.CodigoSesion.Text+"')";
             if (Datos.insertar(query))
             {
                 lbl_resultado.Text = "No se modificó la información, verifique";
@@ -419,36 +394,40 @@ namespace Medicontrol.Facturacion
             }
             else
             {
-                string update = "UPDATE Consecutivos SET NumActual='"+this.txt_numInforme.Text+"' WHERE TipoCont='21'";
-                if (Datos.insertar(update))
-                {
-                    lbl_resultado.Text = "No se modificó la información, verifique";
-                    return;
-                }
-                else
-                {
-                    lbl_resultado.Text = "Infome de AIU guardado";
-                    txt_buscar.Text = string.Empty;
-                    txt_cedula.Text = string.Empty;
-                    txt_nombre.Text = string.Empty;
-                    txt_fecha.Text = string.Empty;
-                    txt_hora.Text = string.Empty;
-                    ddl_causas.ClearSelection();
-                    ddl_cobertura.ClearSelection();
-                    ddl_tipodoc.ClearSelection();
-                    ddl_triage.ClearSelection();
-                    txt_entidad.Text = string.Empty;
-                    txt_contrato.Text = string.Empty;
-                    txt_estrato.Text = string.Empty;
-                    txt_edad.Text = string.Empty;
-                    txt_sexo.Text = string.Empty;
-                }
+                lbl_resultado.Text = "Inconsistencia Guardada";
+                lbl_resultado.Text = "Informe actualizado correctamente";
+                txt_cedula.Text = string.Empty;
+                txt_nombre.Text = string.Empty;
+                txt_entidad.Text = string.Empty;
+                txt_contrato.Text = string.Empty;
+                txt_estrato.Text = string.Empty;
+                txt_edad.Text = string.Empty;
+                txt_sexo.Text = string.Empty;
+                ddl_tipodoc.ClearSelection();
+                ddl_tipodoc2.ClearSelection();
+                ddl_cobertura.ClearSelection();
+                ddl_inconsistencia.ClearSelection();
+                chk_fechaNacimiento.Checked = false;
+                chk_numDocumento.Checked = false;
+                chk_primerApellido.Checked = false;
+                chk_primerNombre.Checked = false;
+                chk_segundoApellido.Checked = false;
+                chk_segundoNombre.Checked = false;
+                chk_Tipodocumento.Checked = false;
+                txt_primerApellido.Text = string.Empty;
+                txt_segundoApellido.Text = string.Empty;
+                txt_primerNombre.Text = string.Empty;
+                txt_segundoNombre.Text = string.Empty;
+                txt_numDocumento.Text = string.Empty;
+                txt_fechaNacimiento.Text = string.Empty;
+                txt_observaciones.Text = string.Empty;
+
             }
         }
 
-        protected void btn_crearSi_Click(object sender, EventArgs e)
+        protected void btn_imprimir_Click(object sender, EventArgs e)
         {
-            Response.Redirect("NuevoPaciente.aspx");
+
         }
     }
 }
