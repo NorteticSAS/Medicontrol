@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Facturacion/Facturacion.Master" AutoEventWireup="true" CodeBehind="AT10-ContrareferenciaPacientes.aspx.cs" Inherits="Medicontrol.Facturacion.WebForm10" %>
+﻿<%@ Page Title="" Language="C#" EnableEventValidation="false" MasterPageFile="~/Facturacion/Facturacion.Master" AutoEventWireup="true" CodeBehind="AT10-ContrareferenciaPacientes.aspx.cs" Inherits="Medicontrol.Facturacion.WebForm10" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>
