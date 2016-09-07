@@ -172,6 +172,11 @@ namespace Medicontrol.Facturacion
                         CodTipoContrato.Text = leer2["ContratoTipo"].ToString();
                     }
                 }
+                if (count == 0)
+                {
+                    lbl_resultado.Text = "El paciente no tiene empresa ni contrato asignado";
+                    return;
+                }
             }
         }
 

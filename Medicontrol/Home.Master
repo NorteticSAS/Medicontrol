@@ -225,6 +225,22 @@
                                                     <asp:Literal ID="Literal20" runat="server" Text="Consultar - Cambiar estado Admision" /></a>
                                             </li>
                                             <li>
+                                                <a href="Facturacion/AT2-InformeAtencionInicialUrgencias.aspx">
+                                                    <asp:Literal ID="Literal30" runat="server" Text="AT No.2 - Informe Atención Inicial de Urgencias" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="Facturacion/AT3-SolicitudServiciosSalud.aspx">
+                                                    <asp:Literal ID="Literal31" runat="server" Text="AT No.3 - Solicitud de autorización de Servicios de Salúd" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="Facturacion/AT9-ReferenciaPacientes.aspx">
+                                                    <asp:Literal ID="Literal32" runat="server" Text="AT No.9 - Referencia de Pacientes" /></a>
+                                            </li>
+                                            <li>
+                                                <a href="Facturacion/AT10-ContrareferenciaPacientes.aspx">
+                                                    <asp:Literal ID="Literal33" runat="server" Text="AT No.10 - Contrareferencia de Pacientes" /></a>
+                                            </li>
+                                            <li>
                                                 <a href="Facturacion/AsignarProcedimientos.aspx">
                                                     <asp:Literal ID="Literal21" runat="server" Text="Asignar Procedimientos" /></a>
                                             </li>

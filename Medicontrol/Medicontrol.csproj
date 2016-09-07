@@ -210,6 +210,8 @@
     <Content Include="Facturacion\AT2-InformeAtencionInicialUrgencias.aspx" />
     <Content Include="Facturacion\AT3-SolicitudServiciosSalud.aspx" />
     <Content Include="Facturacion\InconsistenciasBD.aspx" />
+    <Content Include="Facturacion\AT9-ReferenciaPacientes.aspx" />
+    <Content Include="Facturacion\AT10-ContrareferenciaPacientes.aspx" />
     <Content Include="Imagenes\Delete-icon %281%29.png" />
     <Content Include="Imagenes\ico-print.png" />
     <Content Include="Imagenes\logoimsalud.jpg" />
@@ -666,6 +668,20 @@
     <Compile Include="Facturacion\InconsistenciasBD.aspx.designer.cs">
       <DependentUpon>InconsistenciasBD.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\AT9-ReferenciaPacientes.aspx.cs">
+      <DependentUpon>AT9-ReferenciaPacientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Facturacion\AT9-ReferenciaPacientes.aspx.designer.cs">
+      <DependentUpon>AT9-ReferenciaPacientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\AT10-ContrareferenciaPacientes.aspx.cs">
+      <DependentUpon>AT10-ContrareferenciaPacientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Facturacion\AT10-ContrareferenciaPacientes.aspx.designer.cs">
+      <DependentUpon>AT10-ContrareferenciaPacientes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -834,6 +850,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reportes\Res3047_AT1.rdlc" />
     <EmbeddedResource Include="Reportes\AtenciondeUrgencias.rdlc" />
     <EmbeddedResource Include="Reportes\Cita.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -854,8 +871,8 @@
     <EmbeddedResource Include="Reportes\HojaUrgencias.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\RepAt3.rdlc" />
-    <EmbeddedResource Include="Reportes\Res3047_At2.rdlc" />
+    <EmbeddedResource Include="Reportes\Res3047_AT3.rdlc" />
+    <EmbeddedResource Include="Reportes\Res3047_AT2.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
