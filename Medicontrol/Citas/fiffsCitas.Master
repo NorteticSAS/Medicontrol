@@ -167,6 +167,10 @@
                                                 <a href="../Facturacion/ConsultarFacturas.aspx">
                                                     <asp:Literal ID="Literal5" runat="server" Text="Consultar Facturas" /></a>
                                             </li>
+                                            <li>
+                                                <a href="../Facturacion/TarifasxProcedimientos.aspx">
+                                                    <asp:Literal ID="Literal27" runat="server" Text="Consultar Tarifas por procedimiento" /></a>
+                                            </li>
                                              <li>
                                                 <a href="#">
                                                     <asp:Literal ID="Literal8" runat="server" Text="Facturas Capitadas" /><span class="fa arrow"></span></a>
@@ -189,6 +193,10 @@
                                                     </li>
                                                 </ul>
 
+                                            </li>
+                                            <li>
+                                                <a href="../Facturacion/InconsistenciasBD.aspx">
+                                                    <asp:Literal ID="Literal35" runat="server" Text="Inconsistencia Base de Datos" /></a>
                                             </li>
                                              <li>
                                                 <a href="../Facturacion/CuentaCobro.aspx">

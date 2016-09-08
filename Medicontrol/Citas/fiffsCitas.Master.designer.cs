@@ -229,6 +229,15 @@ namespace Medicontrol.Citas {
         protected global::System.Web.UI.WebControls.Literal Literal5;
         
         /// <summary>
+        /// Literal27 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Literal27;
+        
+        /// <summary>
         /// Literal8 control.
         /// </summary>
         /// <remarks>
@@ -272,6 +281,15 @@ namespace Medicontrol.Citas {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal Literal25;
+        
+        /// <summary>
+        /// Literal35 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Literal35;
         
         /// <summary>
         /// Literal26 control.

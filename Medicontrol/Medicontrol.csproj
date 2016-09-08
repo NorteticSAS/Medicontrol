@@ -212,6 +212,7 @@
     <Content Include="Facturacion\InconsistenciasBD.aspx" />
     <Content Include="Facturacion\AT9-ReferenciaPacientes.aspx" />
     <Content Include="Facturacion\AT10-ContrareferenciaPacientes.aspx" />
+    <Content Include="Facturacion\TarifasxProcedimientos.aspx" />
     <Content Include="Imagenes\Delete-icon %281%29.png" />
     <Content Include="Imagenes\ico-print.png" />
     <Content Include="Imagenes\logoimsalud.jpg" />
@@ -501,6 +502,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatosAT2.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\DSInconsistencias.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSInconsistencias.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Facturacion\FacturaCap.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -682,6 +688,13 @@
     <Compile Include="Facturacion\AT10-ContrareferenciaPacientes.aspx.designer.cs">
       <DependentUpon>AT10-ContrareferenciaPacientes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Facturacion\TarifasxProcedimientos.aspx.cs">
+      <DependentUpon>TarifasxProcedimientos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Facturacion\TarifasxProcedimientos.aspx.designer.cs">
+      <DependentUpon>TarifasxProcedimientos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -787,6 +800,17 @@
     </None>
     <Content Include="Facturacion\DatosAT2.xss">
       <DependentUpon>DatosAT2.xsd</DependentUpon>
+    </Content>
+    <Content Include="Facturacion\DSInconsistencias.xsc">
+      <DependentUpon>DSInconsistencias.xsd</DependentUpon>
+    </Content>
+    <None Include="Facturacion\DSInconsistencias.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSInconsistencias.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Facturacion\DSInconsistencias.xss">
+      <DependentUpon>DSInconsistencias.xsd</DependentUpon>
     </Content>
     <None Include="Facturacion\FacturaCap.xsd">
       <SubType>Designer</SubType>

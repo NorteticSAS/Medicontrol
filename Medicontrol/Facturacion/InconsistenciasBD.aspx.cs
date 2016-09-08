@@ -1,10 +1,12 @@
 ﻿using Helper;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -386,7 +388,7 @@ namespace Medicontrol.Facturacion
                 fechanaci = Convert.ToDateTime(ViewHelper.ConvertToDate(txt_fechaNacimiento.Text));
             }
             
-            string query = "INSERT INTO InconsistenciasBD(NumInforme, documento, fechainforme, TipoIncon1, TipoIncon2, TDI_RC, TDI_TI, TDI_CC, TDI_CE, TDI_PA, TDI_AS, TDI_MS, CS_RC, CS_RST, CS_RSP, CS_CONSISBEN, CS_SINSISBEN, CS_DESPLAZADO, CS_PAS, CS_OTRO, VI_APELLIDO1, VI_APELLIDO2, VI_NOMBRE1, VI_NOMBRE2, VI_TIPODOC, VI_NUMDOC, VI_FECHANAC, APELLIDO1, APELLIDO2, NOMBRE1, NOMBRE2, TIPODOC, NUMDOC, FECHANAC, Observaciones, CodEntidad, CodUsuario) VALUES('"+this.txt_numInforme.Text+ "', '"+this.txt_cedula.Text+ "', '"+this.txt_fecha.Text+ "', '"+this.noexiste.Text+ "', '"+this.nocorresponde.Text+ "', '"+this.txt_tipodocvictimarc.Text+ "', '"+this.txt_tipodocvictimati.Text+ "', '"+this.txt_tipodocvictimacc.Text+ "', '"+this.txt_tipodocvictimace.Text+ "', '"+this.txt_tipodocvictimapa.Text+ "', '"+this.txt_tipodocvictimaas.Text+ "', '"+this.txt_tipodocvictimams.Text+ "', '"+this.coberturaContributivo.Text+ "', '"+this.coberturasubsidiototal.Text+ "', '"+this.coberturasubsidioparcial.Text+ "', '"+this.coberturapobreconsisben.Text+ "', '"+this.coberturapobresinsisben.Text+ "', '"+this.coberturadesplazados.Text+ "', '"+this.coberturaplanadicional.Text+ "', '"+this.coberturaotro.Text+ "', '"+this.primerapellido.Text+ "', '"+this.segundoapellido.Text+ "', '"+this.primernombre.Text+ "', '"+this.segundonombre.Text+ "', '"+this.tipodocumento.Text+ "', '"+this.numdocumento.Text+ "', '"+this.fechaNacim.Text+ "', '"+this.txt_primerApellido.Text+ "', '"+this.txt_segundoApellido.Text+ "', '"+this.txt_primerNombre.Text+ "', '"+this.txt_segundoNombre.Text+ "', '"+this.ddl_tipodoc2.SelectedItem+ "', '"+this.txt_numDocumento.Text+ "', '"+this.txt_fechaNacimiento.Text+"', '"+this.txt_observaciones.Text+"', '"+this.CodEntidad.Text+ "', '"+this.CodigoSesion.Text+"')";
+            string query = "INSERT INTO InconsistenciasBD(NumInforme, documento, fechainforme, TipoIncon1, TipoIncon2, TDI_RC, TDI_TI, TDI_CC, TDI_CE, TDI_PA, TDI_AS, TDI_MS, CS_RC, CS_RST, CS_RSP, CS_CONSISBEN, CS_SINSISBEN, CS_DESPLAZADO, CS_PAS, CS_OTRO, VI_APELLIDO1, VI_APELLIDO2, VI_NOMBRE1, VI_NOMBRE2, VI_TIPODOC, VI_NUMDOC, VI_FECHANAC, APELLIDO1, APELLIDO2, NOMBRE1, NOMBRE2, TIPODOC, NUMDOC, FECHANAC, Observaciones, CodEntidad, CodUsuario, Estado) VALUES('"+this.txt_numInforme.Text+ "', '"+this.txt_cedula.Text+ "', '"+this.txt_fecha.Text+ "', '"+this.noexiste.Text+ "', '"+this.nocorresponde.Text+ "', '"+this.txt_tipodocvictimarc.Text+ "', '"+this.txt_tipodocvictimati.Text+ "', '"+this.txt_tipodocvictimacc.Text+ "', '"+this.txt_tipodocvictimace.Text+ "', '"+this.txt_tipodocvictimapa.Text+ "', '"+this.txt_tipodocvictimaas.Text+ "', '"+this.txt_tipodocvictimams.Text+ "', '"+this.coberturaContributivo.Text+ "', '"+this.coberturasubsidiototal.Text+ "', '"+this.coberturasubsidioparcial.Text+ "', '"+this.coberturapobreconsisben.Text+ "', '"+this.coberturapobresinsisben.Text+ "', '"+this.coberturadesplazados.Text+ "', '"+this.coberturaplanadicional.Text+ "', '"+this.coberturaotro.Text+ "', '"+this.primerapellido.Text+ "', '"+this.segundoapellido.Text+ "', '"+this.primernombre.Text+ "', '"+this.segundonombre.Text+ "', '"+this.tipodocumento.Text+ "', '"+this.numdocumento.Text+ "', '"+this.fechaNacim.Text+ "', '"+this.txt_primerApellido.Text+ "', '"+this.txt_segundoApellido.Text+ "', '"+this.txt_primerNombre.Text+ "', '"+this.txt_segundoNombre.Text+ "', '"+this.ddl_tipodoc2.SelectedItem+ "', '"+this.txt_numDocumento.Text+ "', '"+this.txt_fechaNacimiento.Text+"', '"+this.txt_observaciones.Text+"', '"+this.CodEntidad.Text+ "', '"+this.CodigoSesion.Text+"', '0')";
             if (Datos.insertar(query))
             {
                 lbl_resultado.Text = "No se modificó la información, verifique";
@@ -425,9 +427,102 @@ namespace Medicontrol.Facturacion
             }
         }
 
+        private void ImprimirReporte(string sql)
+        {
+            string id = "PDF"; // get this from another control on your page
+            LocalReport lr = new LocalReport();
+            string path = Path.Combine(Server.MapPath("~/Reportes"), "Res3047_AT1.rdlc");
+            if (System.IO.File.Exists(path))
+            {
+                lr.ReportPath = path;
+            }
+            else
+            {
+                lbl_resultado.Text = "No se encontraron reportes por favor verifique con el administrador";
+                return;
+            }
+
+            DataTable dt = new DataTable();
+            using (SqlConnection cn = new SqlConnection(ruta))
+            {
+
+                SqlDataAdapter da = new SqlDataAdapter(sql, cn);
+
+                //SqlDataAdapter da = new SqlDataAdapter("SELECT Id, CodEntidad, NombreEntidad, CodContrato, NombreContrato, Documento FROM PacientesEntidadContrato WHERE Documento='" + this.txt_documento.Text + "'", cn);
+                da.Fill(dt);
+
+            }
+
+            ReportDataSource rd = new ReportDataSource("DataSet2", dt);
+            lr.DataSources.Add(rd);
+            string reportType = id;
+            string mimeType;
+            string encoding;
+            string fileNameExtension;
+
+            string deviceInfo =
+
+            "<DeviceInfo>" +
+            "  <OutputFormat>" + id + "</OutputFormat>" +
+            "  <PageWidth>8.5in</PageWidth>" +
+            "  <PageHeight>11in</PageHeight>" +
+            "  <MarginTop>0.19685in</MarginTop>" +
+            "  <MarginLeft>0.19685in</MarginLeft>" +
+            "  <MarginRight>0.19685in</MarginRight>" +
+            "  <MarginBottom>0.19685in</MarginBottom>" +
+            "</DeviceInfo>";
+
+            Warning[] warnings;
+            string[] streams;
+            byte[] renderedBytes;
+
+            renderedBytes = lr.Render(
+                reportType,
+                deviceInfo,
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings);
+
+
+            Response.Clear(); // we're going to override the default page response
+            Response.ContentType = mimeType;
+            Response.AddHeader("content-disposition", "attachment; filename= Inconsistencia" + txt_cedula.Text + "." + fileNameExtension);
+            Response.BinaryWrite(renderedBytes);
+
+            Response.End();
+        }
+
         protected void btn_imprimir_Click(object sender, EventArgs e)
         {
-
+            string ConsultarInconsistencia = "SELECT TipoIncon1 FROM InconsistenciasBD WHERE NumInforme='" + txt_numInforme.Text + "'";
+            SqlConnection ConexionConsec = new SqlConnection(ruta);
+            SqlCommand comando6 = new SqlCommand(ConsultarInconsistencia, ConexionConsec);
+            ConexionConsec.Open();
+            SqlDataReader leer6 = comando6.ExecuteReader();
+            if (leer6.Read() == true)
+            {
+                if(leer6["TipoIncon1"].ToString()=="X")
+                {
+                    string print1 = "SELECT Entidad.NombreEntidad, Pacientes.TipoDocumento, Pacientes.FechaNacimiento, Pacientes.Sexo, Pacientes.umEdad, Pacientes.Departamento, Pacientes.Municipio, Pacientes.Zona, Usuarios.Nombre, InconsistenciasBD.fechaInforme, InconsistenciasBD.TipoIncon1, InconsistenciasBD.TipoIncon2, InconsistenciasBD.TDI_RC, InconsistenciasBD.TDI_TI, InconsistenciasBD.TDI_CC, InconsistenciasBD.TDI_CE, InconsistenciasBD.TDI_PA, InconsistenciasBD.TDI_AS, " +
+                                   "InconsistenciasBD.TDI_MS , InconsistenciasBD.CS_RC, InconsistenciasBD.CS_RST, InconsistenciasBD.CS_RSP, InconsistenciasBD.CS_CONSISBEN, InconsistenciasBD.CS_SINSISBEN, InconsistenciasBD.CS_DESPLAZADO, InconsistenciasBD.CS_PAS, InconsistenciasBD.CS_OTRO, InconsistenciasBD.VI_APELLIDO1, InconsistenciasBD.VI_APELLIDO2, InconsistenciasBD.VI_NOMBRE1, InconsistenciasBD.VI_NOMBRE2, InconsistenciasBD.VI_TIPODOC, InconsistenciasBD.VI_NUMDOC, InconsistenciasBD.VI_FECHANAC, InconsistenciasBD.APELLIDO1, " +
+                                   "InconsistenciasBD.APELLIDO2, InconsistenciasBD.NOMBRE1, InconsistenciasBD.NOMBRE2, InconsistenciasBD.TIPODOC, InconsistenciasBD.NUMDOC, InconsistenciasBD.FECHANAC, InconsistenciasBD.NumInforme, InconsistenciasBD.Observaciones, Entidad.Codigo " +
+                                   "FROM Pacientes INNER JOIN (Usuarios INNER JOIN (Entidad INNER JOIN InconsistenciasBD ON Entidad.Codigo = InconsistenciasBD.CodEntidad) ON Usuarios.CodUsuario = InconsistenciasBD.CodUsuario) ON Pacientes.Documento = InconsistenciasBD.documento " +
+                                   "WHERE InconsistenciasBD.NumInforme='" + txt_numInforme.Text + "'";
+                    ImprimirReporte(print1);
+                }
+                else
+                {
+                    string print2 = "SELECT Entidad.NombreEntidad, Pacientes.TipoDocumento, Pacientes.Apellido1, Pacientes.Apellido2, Pacientes.Nombre1, Pacientes.Nombre2, Pacientes.FechaNacimiento, Pacientes.Sexo, Pacientes.umEdad, Pacientes.Departamento, Pacientes.Municipio, Pacientes.Zona, Usuarios.Nombre, InconsistenciasBD.fechaInforme, InconsistenciasBD.TipoIncon1, InconsistenciasBD.TipoIncon2, InconsistenciasBD.TDI_RC, InconsistenciasBD.TDI_TI, InconsistenciasBD.TDI_CC, InconsistenciasBD.TDI_CE, InconsistenciasBD.TDI_PA, InconsistenciasBD.TDI_AS, " +
+                                    "InconsistenciasBD.TDI_MS , InconsistenciasBD.CS_RC, InconsistenciasBD.CS_RST, InconsistenciasBD.CS_RSP, InconsistenciasBD.CS_CONSISBEN, InconsistenciasBD.CS_SINSISBEN, InconsistenciasBD.CS_DESPLAZADO, InconsistenciasBD.CS_PAS, InconsistenciasBD.CS_OTRO, InconsistenciasBD.VI_APELLIDO1, InconsistenciasBD.VI_APELLIDO2, InconsistenciasBD.VI_NOMBRE1, InconsistenciasBD.VI_NOMBRE2, InconsistenciasBD.VI_TIPODOC, InconsistenciasBD.VI_NUMDOC, InconsistenciasBD.VI_FECHANAC, InconsistenciasBD.APELLIDO1, " +
+                                    "InconsistenciasBD.APELLIDO2, InconsistenciasBD.NOMBRE1, InconsistenciasBD.NOMBRE2, InconsistenciasBD.TIPODOC, InconsistenciasBD.NUMDOC, InconsistenciasBD.FECHANAC, InconsistenciasBD.NumInforme, InconsistenciasBD.Observaciones, Entidad.Codigo, InconsistenciasBD.documento " +
+                                    "FROM Pacientes INNER JOIN (Usuarios INNER JOIN (Entidad INNER JOIN InconsistenciasBD ON Entidad.Codigo = InconsistenciasBD.CodEntidad) ON Usuarios.CodUsuario = InconsistenciasBD.CodUsuario) ON Pacientes.Documento = InconsistenciasBD.documento " +
+                                    "WHERE InconsistenciasBD.NumInforme= '" + txt_numInforme.Text + "'";
+                    ImprimirReporte(print2);
+                }
+            }
+            ConexionConsec.Close();
         }
     }
 }

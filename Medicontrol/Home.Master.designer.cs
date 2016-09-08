@@ -238,6 +238,15 @@ namespace Medicontrol {
         protected global::System.Web.UI.WebControls.Literal Literal5;
         
         /// <summary>
+        /// Literal35 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Literal35;
+        
+        /// <summary>
         /// Literal8 control.
         /// </summary>
         /// <remarks>
@@ -281,6 +290,15 @@ namespace Medicontrol {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal Literal25;
+        
+        /// <summary>
+        /// Literal34 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Literal34;
         
         /// <summary>
         /// Literal26 control.
